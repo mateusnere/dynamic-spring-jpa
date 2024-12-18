@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table
-public class Student {
+public class School {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,11 +15,7 @@ public class Student {
     private String name;
 
     @Column
-    private Integer age;
-
-    @ManyToOne
-    @JoinColumn(name = "school_id")
-    private School school;
+    private String borough;
 
     public Long getId() {
         return id;
@@ -37,19 +33,11 @@ public class Student {
         this.name = name;
     }
 
-    public Integer getAge() {
-        return age;
+    public String getBorough() {
+        return borough;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
-    public School getSchool() {
-        return school;
-    }
-
-    public void setSchool(School school) {
-        this.school = school;
+    public void setBorough(String borough) {
+        this.borough = borough;
     }
 }

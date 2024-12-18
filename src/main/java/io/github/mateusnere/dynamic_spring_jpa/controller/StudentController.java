@@ -31,4 +31,20 @@ public class StudentController {
         Student studentById = studentService.getStudentById(id);
         return ResponseEntity.ok(studentById);
     }
+
+    @GetMapping("/specific")
+    public ResponseEntity<List<Student>> getSpecificsStudents() {
+        var age = 20;
+        var endsWith = "Smith";
+        var schoolBorough = "Ealing";
+
+        List<Student> specificsStudents = studentService.getSpecificsStudents(age, endsWith, schoolBorough);
+        return ResponseEntity.ok(specificsStudents);
+    }
+
+    @GetMapping("/studyatborough/{borough}")
+    public ResponseEntity<List<Student>> getStudentsByPartOfBorough(@PathVariable("borough") String partOfBoroughName) {
+        List<Student> studentsByPartOfBoroughName = studentService.getStudentsByPartOfBoroughName(partOfBoroughName);
+        return ResponseEntity.ok(studentsByPartOfBoroughName);
+    }
 }
