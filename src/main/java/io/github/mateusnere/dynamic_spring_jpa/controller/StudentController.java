@@ -47,4 +47,16 @@ public class StudentController {
         List<Student> studentsByPartOfBoroughName = studentService.getStudentsByPartOfBoroughName(partOfBoroughName);
         return ResponseEntity.ok(studentsByPartOfBoroughName);
     }
+
+    @GetMapping("/querydsl")
+    public ResponseEntity<List<Student>> getStudentsUsingQueryDSL() {
+        List<Student> studentsUsingQueryDSL = studentService.getStudentsUsingQueryDSL();
+        return ResponseEntity.ok(studentsUsingQueryDSL);
+    }
+
+    @GetMapping("/querydsl/schoolname/{name}")
+    public ResponseEntity<List<Student>> getStudentsUsingQueryDSLSchoolName(@PathVariable("name") String name) {
+        List<Student> studentsUsingQueryDSL = studentService.getStudentsUsingQueryDSLSchoolName(name);
+        return ResponseEntity.ok(studentsUsingQueryDSL);
+    }
 }

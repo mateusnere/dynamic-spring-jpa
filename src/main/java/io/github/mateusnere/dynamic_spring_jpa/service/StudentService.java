@@ -1,11 +1,14 @@
 package io.github.mateusnere.dynamic_spring_jpa.service;
 
+import com.querydsl.core.types.dsl.BooleanExpression;
+import io.github.mateusnere.dynamic_spring_jpa.model.QStudent;
 import io.github.mateusnere.dynamic_spring_jpa.model.Student;
 import io.github.mateusnere.dynamic_spring_jpa.repository.StudentRepository;
 import io.github.mateusnere.dynamic_spring_jpa.specification.StudentSpecification;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -47,5 +50,21 @@ public class StudentService {
         Specification<Student> studentSpec =
                 Specification.where(StudentSpecification.isSchoolBoroughLike(partOfBoroughName));
         return studentRepository.findAll(studentSpec);
+    }
+
+    public List<Student> getStudentsUsingQueryDSL() {
+        QStudent qStudent = QStudent.student;
+        BooleanExpression predicate =
+                qStudent.name.endsWithIgnoreCase("smith")
+                        .and(qStudent.age.eq(20))
+                        .and(qStudent.school.borough.contains("Ealing"));
+        return (List<Student>) studentRepository.findAll(predicate);
+    }
+
+    public List<Student> getStudentsUsingQueryDSLSchoolName(String name) {
+        QStudent qStudent = QStudent.student;
+        BooleanExpression predicate =
+                qStudent.school.name.containsIgnoreCase(name);
+        return (List<Student>) studentRepository.findAll(predicate);
     }
 }
